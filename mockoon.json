@@ -1,119 +1,181 @@
 {
-    "uuid": "744bcb1e-2777-4d56-8dec-3f8f1a421c3d",
-    "lastMigration": 32,
-    "name": "Myaddress",
-    "endpointPrefix": "",
-    "latency": 0,
-    "port": 3001,
-    "hostname": "",
-    "folders": [],
-    "routes": [
+  "uuid": "",
+  "lastMigration": 29,
+  "name": "Tutorial - Generate mock data",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "routes": [
+    {
+      "uuid": "",
+      "documentation": "Get a list of posts (JSON)",
+      "method": "get",
+      "endpoint": "posts",
+      "responses": [
         {
-            "uuid": "40ece485-360e-46a9-b0f8-6e9e497cf974",
-            "type": "http",
-            "documentation": "",
-            "method": "get",
-            "endpoint": "address/:cep",
-            "responses": [
-                {
-                    "uuid": "d8aa7b99-5e43-444f-892b-523147f5cb6b",
-                    "body": "\n    {\n      \"cep\": \"01001-000\",\n      \"logradouro\": \"Praça da Sé\",\n      \"complemento\": \"lado ímpar\",\n      \"unidade\": \"\",\n      \"bairro\": \"Sé\",\n      \"localidade\": \"São Paulo\",\n      \"uf\": \"SP\",\n      \"estado\": \"São Paulo\",\n      \"regiao\": \"Sudeste\",\n      \"ibge\": \"3550308\",\n      \"gia\": \"1004\",\n      \"ddd\": \"11\",\n      \"siafi\": \"7107\"\n    }",
-                    "latency": 0,
-                    "statusCode": 200,
-                    "label": "",
-                    "headers": [],
-                    "bodyType": "INLINE",
-                    "filePath": "",
-                    "databucketID": "",
-                    "sendFileAsBody": false,
-                    "rules": [
-                        {
-                            "target": "params",
-                            "modifier": "cep",
-                            "value": "01001-000",
-                            "invert": false,
-                            "operator": "equals"
-                        }
-                    ],
-                    "rulesOperator": "OR",
-                    "disableTemplating": false,
-                    "fallbackTo404": false,
-                    "default": false,
-                    "crudKey": "id",
-                    "callbacks": []
-                },
-                {
-                    "uuid": "6acc32e2-02c5-4a6d-bcdd-9ff46ccee85f",
-                    "body": "{\n  \"message\":\"zip code does not exist\"\n}",
-                    "latency": 0,
-                    "statusCode": 404,
-                    "label": "",
-                    "headers": [],
-                    "bodyType": "INLINE",
-                    "filePath": "",
-                    "databucketID": "",
-                    "sendFileAsBody": false,
-                    "rules": [],
-                    "rulesOperator": "OR",
-                    "disableTemplating": false,
-                    "fallbackTo404": false,
-                    "default": true,
-                    "crudKey": "id",
-                    "callbacks": []
-                }
-            ],
-            "responseMode": null
+          "uuid": "",
+          "body": "[\r\n  {{#repeat (queryParam 'total' '3')}}\r\n  {\r\n    \"id\": {{@index}},\r\n    \"title\": \"{{faker 'lorem.sentence'}}\",\r\n    \"content\": \"{{faker 'lorem.sentences'}}\",\r\n    \"media\": \"{{faker 'image.urlLoremFlickr'category=\"nature\"}}\",\r\n    \"author\": {\r\n      \"name\": \"{{faker 'person.firstName'}} {{faker 'person.lastName'}}\",\r\n      \"avatar\": \"{{faker 'image.avatar'}}\"\r\n    },\r\n    \"comments\": [\r\n      {{#repeat (faker 'string.numeric' 1)}}\r\n      {\r\n        \"id\": \"{{faker 'string.uuid'}}\",\r\n        \"content\": \"{{faker 'lorem.sentence'}}\",\r\n        \"author\": {\r\n          \"name\": \"{{faker 'person.firstName'}} {{faker 'person.firstName'}}\",\r\n          \"avatar\": \"{{faker 'image.avatar'}}\"\r\n        }\r\n      }\r\n      {{/repeat}}\r\n    ],\r\n    \"likes\": {{faker 'string.numeric' 100}},\r\n    \"shares\": {{faker 'string.numeric' 100}},\r\n    \"location\": {\r\n      \"lat\": {{faker 'location.latitude'}},\r\n      \"long\": {{faker 'location.longitude'}}\r\n    },\r\n    \"archived\": {{faker 'datatype.boolean'}}\r\n  }\r\n  {{/repeat}}\r\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [{ "key": "", "value": "" }],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id"
         }
-    ],
-    "rootChildren": [
-        {
-            "type": "route",
-            "uuid": "40ece485-360e-46a9-b0f8-6e9e497cf974"
-        }
-    ],
-    "proxyMode": false,
-    "proxyHost": "",
-    "proxyRemovePrefix": false,
-    "tlsOptions": {
-        "enabled": false,
-        "type": "CERT",
-        "pfxPath": "",
-        "certPath": "",
-        "keyPath": "",
-        "caPath": "",
-        "passphrase": ""
+      ],
+      "enabled": true,
+      "responseMode": null,
+      "type": "http"
     },
-    "cors": true,
-    "headers": [
+    {
+      "uuid": "",
+      "documentation": "Get a list of location (CSV)",
+      "method": "get",
+      "endpoint": "geoData",
+      "responses": [
         {
-            "key": "Content-Type",
-            "value": "application/json"
-        },
-        {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-        },
-        {
-            "key": "Access-Control-Allow-Methods",
-            "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
-        },
-        {
-            "key": "Access-Control-Allow-Headers",
-            "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+          "uuid": "",
+          "body": "city,state,address,latitude,longitude,timezone\r\n{{#repeat 5000}}\r\n{{faker 'location.city'}},{{faker 'location.stateAbbr'}},{{faker 'location.streetAddress'}},{{faker 'location.latitude'}},{{faker 'location.longitude'}},{{faker 'location.timeZone'}}\r\n{{/repeat}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [{ "key": "Content-Type", "value": "text/csv" }],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id"
         }
-    ],
-    "proxyReqHeaders": [
+      ],
+      "enabled": true,
+      "responseMode": null,
+      "type": "http"
+    },
+    {
+      "uuid": "",
+      "documentation": "Get a list of products (XML)",
+      "method": "get",
+      "endpoint": "products",
+      "responses": [
         {
-            "key": "",
-            "value": ""
+          "uuid": "",
+          "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<PRODUCTS>\r\n  {{# repeat 50}}\r\n  <PRODUCT>\r\n    <UUID>{{faker 'string.uuid'}}</UUID>\r\n    <NAME>{{faker 'commerce.product'}}</NAME>\r\n    <PRICE>{{faker 'commerce.price'}}</PRICE>\r\n    <COLOR>{{faker 'color.human'}}</COLOR>\r\n    <INVENTORY>{{faker 'string.numeric' 50}}</INVENTORY>\r\n  </PRODUCT>\r\n  {{/ repeat}}\r\n</PRODUCTS>",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [{ "key": "Content-Type", "value": "application/xml" }],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id"
         }
-    ],
-    "proxyResHeaders": [
+      ],
+      "enabled": true,
+      "responseMode": null,
+      "type": "http"
+    },
+    {
+      "uuid": "",
+      "documentation": "Create a user",
+      "method": "post",
+      "endpoint": "users",
+      "responses": [
         {
-            "key": "",
-            "value": ""
+          "uuid": "",
+          "body": "{\r\n  \"id\": \"{{faker 'string.uuid'}}\",\r\n  \"firstname\": \"{{body 'firstname'}}\",\r\n  \"lastname\": \"{{body 'lastname'}}\",\r\n  \"birthdate\": \"{{body 'birthdate'}}\",\r\n  \"email\": \"{{body 'email'}}\",\r\n  \"createdAt\": \"{{now}}\"\r\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "Created",
+          "headers": [{ "key": "", "value": "" }],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id"
         }
-    ],
-    "data": [],
-    "callbacks": []
+      ],
+      "enabled": true,
+      "responseMode": null,
+      "type": "http"
+    },
+    {
+      "uuid": "",
+      "documentation": "Get a list of products or materials",
+      "method": "get",
+      "endpoint": "inventory/:type",
+      "responses": [
+        {
+          "uuid": "",
+          "body": "[\r\n  {{#repeat (queryParam 'total' '5')}}\r\n  {\r\n    \"id\": \"{{faker 'string.uuid'}}\",\r\n    {{# switch (urlParam 'type')}}\r\n    {{# case 'products'}}\r\n    \"name\": \"{{faker 'commerce.product'}}\",\r\n    \"price\": \"{{faker 'commerce.price'}} EUR\"\r\n    {{/ case}}\r\n    {{# case 'materials'}}\r\n    \"name\": \"{{faker 'commerce.productMaterial'}}\",\r\n    \"quantity\": \"{{faker 'string.numeric' 50}}\"\r\n    {{/ case}}\r\n    {{/ switch}}\r\n  }\r\n  {{/repeat}}\r\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [{ "key": "", "value": "" }],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "databucketID": "",
+          "bodyType": "INLINE",
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null,
+      "type": "http"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "cors": true,
+  "headers": [{ "key": "Content-Type", "value": "application/json" }],
+  "proxyReqHeaders": [{ "key": "", "value": "" }],
+  "proxyResHeaders": [{ "key": "", "value": "" }],
+  "proxyRemovePrefix": false,
+  "hostname": "",
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "data": [],
+  "folders": [],
+  "rootChildren": [
+    { "type": "route", "uuid": "" },
+    { "type": "route", "uuid": "" },
+    { "type": "route", "uuid": "" },
+    { "type": "route", "uuid": "" },
+    { "type": "route", "uuid": "" }
+  ]
 }
